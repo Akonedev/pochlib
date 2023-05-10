@@ -188,6 +188,7 @@ function addBookToPochList(book, bookToAdd) {
     books.push(book);
     sessionStorage.setItem('myPochList', JSON.stringify(books));
     alert('Le livre est ajouté dans votre pochlist');
+    // alert("Le Livre " + found.title + " de " + found.author + " est ajouté");
     
   }
 

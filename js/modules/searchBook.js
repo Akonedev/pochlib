@@ -1,4 +1,5 @@
-export function searchBook() {
+export default function searchBook() {
+
     var url = "https://www.googleapis.com/books/v1/volumes?q=";
     var title= document.getElementById('title').value;
     console.log(title);

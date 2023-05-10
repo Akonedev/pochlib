@@ -36,6 +36,23 @@ function addSearchForm() {
       </div>
     </form>`;
     
-    
+    searchFormEventListener();
   }
   
+  function searchFormEventListener() {
+
+      document.getElementById('cancelButton').addEventListener('click', function() {
+          cancelSearch();
+          // affichage de la pochlist
+      })
+    
+    }
+
+function cancelSearch() {
+    const addBookDiv = document.querySelector(".cancelButton");
+    addBookDiv.innerHTML = `
+    <button type="button" onclick="addSearchForm()" id="cancelButton" class="cancelButton"</button>`;
+    newQuery.after(cancelButton);
+    window.location.reload(false)
+    
+ }

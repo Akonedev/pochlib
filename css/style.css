@@ -45,6 +45,16 @@ body #myBooks > hr {
   margin-bottom: 1%;
 }
 
+.form-group {
+  display: block;
+}
+
+.form-group .form-control {
+  width: 99.2%;
+  height: 30px;
+  display: flex;
+}
+
 /* bouton ajouter un livre   */
 .addButton {
   display: inline-block;
@@ -60,10 +70,71 @@ body #myBooks > hr {
   height: 40px;
   line-height: 20px;
   font-size: 15px;
-  font-family: "STIX Two Text", serif;
+  font-family: "Trebuchet MS", sans-serif;
   font-weight: normal;
   background-color: #2a2dd6;
   justify-content: center;
   display: flex;
   cursor: pointer;
+}
+
+/* rendre transparant au passage de la souris          */
+.addButton:hover {
+  opacity: 0.9;
+}
+
+/*bouton rechercher*/
+.searchButton {
+  display: inline-block;
+  padding: 10px 24px;
+  outline: none;
+  margin: auto;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  color: white;
+  width: 200px;
+  height: 40px;
+  line-height: 20px;
+  font-size: 15px;
+  font-family: "Trebuchet MS", sans-serif;
+  font-weight: normal;
+  background-color: #30ca1c;
+  justify-content: center;
+  display: flex;
+  margin-right: 100%;
+  cursor: pointer;
+}
+
+.searchButton:hover {
+  opacity: 0.9;
+}
+
+/*bouton annuler*/
+.cancelButton {
+  display: inline-block;
+  padding: 10px 24px;
+  outline: none;
+  margin: auto;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  color: white;
+  width: 200px;
+  height: 40px;
+  line-height: 20px;
+  font-size: 15px;
+  font-family: "Trebuchet MS", sans-serif;
+  font-weight: normal;
+  background-color: #e72a08;
+  justify-content: center;
+  display: flex;
+  margin-right: 100%;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  opacity: 0.9;
 }/*# sourceMappingURL=style.css.map */

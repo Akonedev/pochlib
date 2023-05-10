@@ -135,7 +135,8 @@ if (!books) {
 
             const addBookmarkButton = document.createElement('div');
             addBookmarkButton.innerHTML = `
-            <button type="button" id="addBookmarkButton" class="addBookmarkButton"> Ajouter </button>`;
+            <i class="addBookmarkButton fa fa-bookmark" id="addBookmarkButton"></i>
+            `;
 
             const imgCard = document.createElement('img');
             imgCard.className = 'card-img';

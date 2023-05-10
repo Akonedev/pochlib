@@ -5,15 +5,7 @@ const container = document.getElementById("myBooks");
 
 addBookButton();
 
-// Initialisation
-const books = JSON.parse(sessionStorage.getItem('myPochList'));
-if (!books) {
-  sessionStorage.setItem('myPochList', JSON.stringify([]));
-} else {
-  books.map((b) => {
-    addBookToPochList(b, false);
-  });
-}
+
 
 //fonction bouton "ajouter un livre"
 function addBookButton() {
@@ -73,6 +65,16 @@ function cancelSearch() {
     window.location.reload(false)
     
  }
+
+ // Initialisation
+const books = JSON.parse(sessionStorage.getItem('myPochList'));
+if (!books) {
+  sessionStorage.setItem('myPochList', JSON.stringify([]));
+} else {
+  books.map((b) => {
+    addBookToPochList(b, false);
+  });
+}
 
  function searchBook() {
 
@@ -177,8 +179,7 @@ function addBookToPochList(book, bookToAdd) {
   const books = JSON.parse(sessionStorage.getItem('myPochList'));
   const found = books.find(e => e.id==book.id);
  
-  if (found && bookToAdd ){
-  
+  if (found && bookToAdd ){  
     alert('ce livre existe déjà dans votre pochlist');
     return;
 }
@@ -186,11 +187,11 @@ function addBookToPochList(book, bookToAdd) {
   if(bookToAdd){
     books.push(book);
     sessionStorage.setItem('myPochList', JSON.stringify(books));
-    alert("Le Livre est ajouté");
+    alert('Le livre est ajouté dans votre pochlist');
     
   }
 
-  const pochList = document.getElementById('poch-container');
+  const pochList = document.getElementById('livre-container');
   
   const card = document.createElement('div');
   card.id = 'poch-' + book.id;
@@ -222,7 +223,6 @@ function addBookToPochList(book, bookToAdd) {
   const headerCard = document.createElement('div');
   headerCard.className = 'card-header';
   headerCard.appendChild(titleBookCard);
-
 
 
   const removeButton = document.createElement('div');

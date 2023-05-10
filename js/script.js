@@ -1,9 +1,7 @@
-// const container = document.getElementById("myBooks");
+
 let newQuery = document.querySelector(".searchTitle"); 
-let pageTitle = document.querySelector(".title");
-const contentBook = document.getElementById("content");
 const container = document.getElementById("myBooks");
-const maPochListe = document.getElementById("poch-list");
+
 
 addBookButton();
 

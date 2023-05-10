@@ -1,36 +1,38 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css?family=Montserrat");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
 /* Body */
 body {
-  font-family: "Montserrat", sans-serif;
-  font-size: 18px;
-  margin: 0;
-  padding: 20px;
+  font-family: "Roboto", sans-serif;
+  padding: 2em;
 }
 
 /* Poch'Lib */
 #myBooks > h1 {
-  padding-top: 1%;
+  padding-top: 2%;
+  padding-bottom: 1%;
   text-align: center;
   border: 3px #eeeded;
-  height: 40px;
-  line-height: 30px;
   font-weight: normal;
-  font-family: "Montserrat", sans-serif;
   background-color: #eff0f4;
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
 /*nouveau livre*/
 #myBooks > h2 {
+  padding-top: 2vh;
   text-align: center;
-  font-family: "Montserrat", sans-serif;
 }
 
 /* titre du contenu- mise en page */
 .contentTitle {
   height: 9vh;
   padding-top: 4vh;
+}
+
+.resultRech {
+  text-align: center;
+  padding-top: 1% M;
+  padding-bottom: 1%;
 }
 
 /* Séparateur */
@@ -45,7 +47,6 @@ body {
 /*ma poch'liste*/
 #content > h3 {
   text-align: center;
-  font-family: "Montserrat", sans-serif;
   font-weight: bolder;
   margin-top: 1%;
   margin-bottom: 1%;
@@ -56,9 +57,9 @@ body {
 }
 
 .form-group .form-control {
-  width: 99.2%;
-  height: 30px;
   display: flex;
+  height: 4vh;
+  width: 90%;
 }
 
 /* bouton ajouter un livre   */

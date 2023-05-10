@@ -165,7 +165,7 @@ if (!books) {
         //Affichage des résultats    
         const titlePochList = document.createElement('h2');
         titlePochList.id = 'titlePochList';
-        titlePochList.className = 'h2';
+        titlePochList.className = 'resultRech';
         titlePochList.innerHTML = "Résultats de la recherche";
         titlePochList.style.marginTop = "40px";
         const cardWrapper = document.createElement('div');

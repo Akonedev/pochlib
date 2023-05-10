@@ -38,8 +38,32 @@ body #myBooks > hr {
 /*ma poch'liste*/
 #content > h3 {
     text-align: center;
-    font-family: "Source Code Pro", monospace;
+    font-family: "Montserrat",  sans-serif;
     font-weight: bolder;
     margin-top: 1%;
     margin-bottom: 1%;
     }
+
+    
+/* bouton ajouter un livre   */
+.addButton {
+    display: inline-block;
+    padding: 10px 24px;
+    outline: none;
+    margin: auto;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    color: white;
+    width: 200px;
+    height: 40px;
+    line-height: 20px;
+    font-size: 15px;
+    font-family: 'STIX Two Text', serif;
+    font-weight: normal;
+    background-color: #2a2dd6;
+    justify-content: center;
+    display: flex;
+    cursor: pointer;
+  }

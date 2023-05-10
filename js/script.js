@@ -2,10 +2,7 @@
 let newQuery = document.querySelector(".searchTitle"); 
 const container = document.getElementById("myBooks");
 
-
 addBookButton();
-
-
 
 //fonction bouton "ajouter un livre"
 function addBookButton() {
@@ -44,6 +41,7 @@ function addSearchForm() {
     searchFormEventListener();
   }
   
+  //Listener pourles boutons
   function searchFormEventListener() {
 
     document.getElementById('cancelButton').addEventListener('click', function() {
@@ -57,6 +55,7 @@ function addSearchForm() {
     
     }
 
+//Annuler la recherche
 function cancelSearch() {
     const addBookDiv = document.querySelector(".cancelButton");
     addBookDiv.innerHTML = `
@@ -76,6 +75,7 @@ if (!books) {
   });
 }
 
+//Recherche de livre
  function searchBook() {
 
     var url = "https://www.googleapis.com/books/v1/volumes?q=";
@@ -174,7 +174,9 @@ if (!books) {
         });
 
 }
-//fonction d'ajout de livre dans la pochlist
+
+
+//Ajout , suppression de livre dans la pochlist
 function addBookToPochList(book, bookToAdd) {
   const books = JSON.parse(sessionStorage.getItem('myPochList'));
   const found = books.find(e => e.id==book.id);
@@ -188,8 +190,6 @@ function addBookToPochList(book, bookToAdd) {
     books.push(book);
     sessionStorage.setItem('myPochList', JSON.stringify(books));
     alert('Le livre est ajouté dans votre pochlist');
-    // alert("Le Livre " + found.title + " de " + found.author + " est ajouté");
-    
   }
 
   const pochList = document.getElementById('livre-container');
@@ -226,13 +226,16 @@ function addBookToPochList(book, bookToAdd) {
   headerCard.appendChild(titleBookCard);
 
 
+  //Suppresion de livre
   const removeButton = document.createElement('div');
   removeButton.innerHTML = `
-  <button type="button" id="removeButton" class="removeButton"> Supprimer </button>`;
+  
+  <i class="fa fa-trash removeButton"  id="removeButton"></i>`;
 
   removeButton.onclick = function() {
     const cardToDelete = document.getElementById('poch-'+book.id);
     cardToDelete.parentElement.removeChild(cardToDelete);
+    alert("Livre supprimé");
 
     let books = JSON.parse(sessionStorage.getItem('myPochList'));
     books = books.filter((b) => b.id != book.id);
@@ -250,6 +253,7 @@ function addBookToPochList(book, bookToAdd) {
     imgCard.src = book.volumeInfo.imageLinks.thumbnail;
   }
   
+  //Constructiond l'architecture pour l'affichage
   pochList.appendChild(card);
   card.appendChild(headerCard);
   card.appendChild(idBookCard);

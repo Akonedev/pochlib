@@ -198,3 +198,22 @@ body {
   max-width: 30%;
   
 }
+
+.removeButton{
+  float: right;
+  color:#cd1d1d ;
+  
+  }
+
+  #alert {
+    display: none;
+    background-color: rgb(252, 219, 219);
+    border: 1px solid green;
+    position: fixed;
+    height: 80px;
+    width: 250px;
+    left: 40%;
+    top: 2%;
+    padding: 6px 8px 8px;
+    text-align: center;
+ }

@@ -1,4 +1,4 @@
-export default function searchBook() {
+export function searchBook() {
 
     var url = "https://www.googleapis.com/books/v1/volumes?q=";
     var title= document.getElementById('title').value;
@@ -7,16 +7,20 @@ export default function searchBook() {
     var author= document.getElementById('author').value;
     console.log(author);
     url=url+author;
+    
     //si pas de titre ou auteur afficher l'alert
     if (!title || !author) {
     alert('Veuiller préciser titre et auteur');
     return;
-
     }
 
-fetch(url)
-    .then((res) => res.json())
-    .then((results) => {
+    const reponse = fetch(url)
+    const reponseJson = reponseres.json()
+
+    getResult(reponseJson);
+
+    function getResult (results)
+    {    
     const container  = document.getElementById('card-container');
     if (container) {
         container.parentElement.removeChild(container);
@@ -87,6 +91,7 @@ fetch(url)
         card.appendChild(imgCard);
 
     });
+    
     //création page des résultats
     const titlePochList = document.createElement('h2');
     titlePochList.id = 'titlePochList';
@@ -97,10 +102,6 @@ fetch(url)
     cardWrapper.appendChild(titlePochList);
     cardWrapper.appendChild(cardContainer);
     content.insertBefore(cardWrapper, content.childNodes[0]);
-    });
+    };
 
 }
-
-// module.exports = {
-//     searchBook: searchBook
-//   };

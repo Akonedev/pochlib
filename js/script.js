@@ -1,23 +1,38 @@
 
-let newQuery = document.querySelector(".searchTitle"); 
+let newQuery = document.querySelector(".searchTitle");
 const container = document.getElementById("myBooks");
 
-addBookButton();
 
 //fonction bouton "ajouter un livre"
 function addBookButton() {
-    let addButton = document.createElement("div");
-    addButton.innerHTML = `<div class="addBook">
-        <button onclick="addSearchForm()" type="button" class="addButton"> Ajouter un livre </button>
-      </div>`;
-      container.appendChild(addButton);
-      newQuery.after(addButton);
-    }
-  
-// mise en page 
+ 
+  let addButton = document.createElement("div");
+  addButton.innerHTML = `<div class="addBook">
+      <button onclick="addSearchForm()" type="button" class="addButton"> Ajouter un livre </button>
+    </div>`;
+  container.appendChild(addButton);
+  newQuery.after(addButton);
+}
+
+addBookButton();
+
+
+// Initialisation de la liste de livres
+const books = JSON.parse(sessionStorage.getItem('myPochList'));
+if (!books) {
+  sessionStorage.setItem('myPochList', JSON.stringify([]));
+} else {
+  books.map((b) => {
+    addBookToPochList(b, false);
+  });
+}
+
+
+
+// Mise en page 
 function addSearchForm() {
-    const addBookDiv = document.querySelector(".addBook");
-    addBookDiv.innerHTML = `
+  const addBookDiv = document.querySelector(".addBook");
+  addBookDiv.innerHTML = `
     <form id="search-card" onsubmit="searchResults(); return false;">
       <div class="form-group">
         <label class="bookTitle" for="title"> Titre du Livre </label>
@@ -37,45 +52,36 @@ function addSearchForm() {
         </div><br>
       </div>
     </form>`;
-    
-    searchFormEventListener();
-  }
-  
-  //Listener pourles boutons
-  function searchFormEventListener() {
+  searchFormEventListener();
+}
 
-    document.getElementById('cancelButton').addEventListener('click', function() {
-        cancelSearch();          
-    })
+//Listener pourles boutons
+function searchFormEventListener() {
 
-    document.getElementById('searchButton').addEventListener('click', function() {
+  document.getElementById('cancelButton').addEventListener('click', function () {
+    cancelSearch();
+  })
+
+  document.getElementById('searchButton').addEventListener('click', function () {
     searchBook();
-        
-    })
-    
-    }
+
+  })
+
+}
 
 //Annuler la recherche
 function cancelSearch() {
-    const addBookDiv = document.querySelector(".cancelButton");
-    addBookDiv.innerHTML = `
+  const addBookDiv = document.querySelector(".cancelButton");
+  addBookDiv.innerHTML = `
     <button type="button" onclick="addSearchForm()" id="cancelButton" class="cancelButton"</button>`;
-    newQuery.after(cancelButton);
-    window.location.reload(false)
-    
- }
+  newQuery.after(cancelButton);
+  window.location.reload(false)
 
- // Initialisation
-const books = JSON.parse(sessionStorage.getItem('myPochList'));
-if (!books) {
-  sessionStorage.setItem('myPochList', JSON.stringify([]));
-} else {
-  books.map((b) => {
-    addBookToPochList(b, false);
-  });
 }
 
-//Recherche de livre
+
+//Recherche de livre et Affichage du resultat
+// //Recherche de livre
  function searchBook() {
 
     var url = "https://www.googleapis.com/books/v1/volumes?q=";
@@ -161,7 +167,7 @@ if (!books) {
             card.appendChild(imgCard);
 
         });
-        
+
         //Affichage des résultats    
         const titlePochList = document.createElement('h2');
         titlePochList.id = 'titlePochList';
@@ -180,21 +186,21 @@ if (!books) {
 //Ajout , suppression de livre dans la pochlist
 function addBookToPochList(book, bookToAdd) {
   const books = JSON.parse(sessionStorage.getItem('myPochList'));
-  const found = books.find(e => e.id==book.id);
- 
-  if (found && bookToAdd ){  
+  const found = books.find(e => e.id == book.id);
+
+  if (found && bookToAdd) {
     alert('ce livre existe déjà dans votre pochlist');
     return;
-}
+  }
 
-  if(bookToAdd){
+  if (bookToAdd) {
     books.push(book);
     sessionStorage.setItem('myPochList', JSON.stringify(books));
     alert('Le livre est ajouté dans votre pochlist');
   }
 
   const pochList = document.getElementById('livre-container');
-  
+
   const card = document.createElement('div');
   card.id = 'poch-' + book.id;
   card.className = 'card';
@@ -221,7 +227,7 @@ function addBookToPochList(book, bookToAdd) {
   } else if (descriptionBookCard.innerText.length > 200) {
     descriptionBookCard.innerText = descriptionBookCard.innerText.substring(0, 200) + '...';
   }
-      
+
   const headerCard = document.createElement('div');
   headerCard.className = 'card-header';
   headerCard.appendChild(titleBookCard);
@@ -233,8 +239,8 @@ function addBookToPochList(book, bookToAdd) {
   
   <i class="fa fa-trash removeButton"  id="removeButton"></i>`;
 
-  removeButton.onclick = function() {
-    const cardToDelete = document.getElementById('poch-'+book.id);
+  removeButton.onclick = function () {
+    const cardToDelete = document.getElementById('poch-' + book.id);
     cardToDelete.parentElement.removeChild(cardToDelete);
     alert("Livre supprimé");
 
@@ -253,7 +259,7 @@ function addBookToPochList(book, bookToAdd) {
   } else {
     imgCard.src = book.volumeInfo.imageLinks.thumbnail;
   }
-  
+
   //Constructiond l'architecture pour l'affichage
   pochList.appendChild(card);
   card.appendChild(headerCard);

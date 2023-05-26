@@ -1,11 +1,11 @@
 
 let newQuery = document.querySelector(".searchTitle");
 const container = document.getElementById("myBooks");
+const books = JSON.parse(sessionStorage.getItem('myPochList'));
 
-
-//fonction bouton "ajouter un livre"
+// //fonction bouton "ajouter un livre"
 function addBookButton() {
-   let addButton = document.createElement("div");
+  let addButton = document.createElement("div");
   addButton.innerHTML = `<div class="addBook">
       <button onclick="addSearchForm()" type="button" class="addButton"> Ajouter un livre </button>
     </div>`;
@@ -17,7 +17,7 @@ function createModal(message) {
   let addModal = document.createElement("div");
   addModal.className = "divParentModal";
   addModal.id = "divParentModal";
-  addModal.innerHTML="";
+  addModal.innerHTML = "";
   addModal.innerHTML = `<div id="myModal" class="modal">
   <!-- Modal content -->
   <div class="modal-content">
@@ -35,27 +35,27 @@ function createModal(message) {
   modal.style.display = "block";
 
   var span = document.getElementsByClassName("close")[0];
-  span.onclick = function() {
+  span.onclick = function () {
     message = "";
     modal.style.display = "none";
   }
 
-  window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
     }
   }
 
-var parentModal = document.getElementById("divParentModal");
-// parentModal.classList.add('modal_alert');
-parentModal.style.setProperty('background-color', 'blue');
+  var parentModal = document.getElementById("divParentModal");
+  // parentModal.classList.add('modal_alert');
+  parentModal.style.setProperty('background-color', 'blue');
 }
 
-addBookButton();
+addBookButton(container, newQuery);
 
 
 // Initialisation de la liste de livres
-const books = JSON.parse(sessionStorage.getItem('myPochList'));
+
 if (!books) {
   sessionStorage.setItem('myPochList', JSON.stringify([]));
 } else {
@@ -91,7 +91,7 @@ function addSearchForm() {
   searchFormEventListener();
 }
 
-//Listener pourles boutons
+// //Listener pour les boutons
 function searchFormEventListener() {
 
   document.getElementById('cancelButton').addEventListener('click', function () {
@@ -118,103 +118,104 @@ function cancelSearch() {
 
 //Recherche de livre et Affichage du resultat
 // //Recherche de livre
- function searchBook() {
+function searchBook() {
 
-    var url = "https://www.googleapis.com/books/v1/volumes?q=";
-    var title= document.getElementById('title').value;
-    var author= document.getElementById('author').value;
-    url=url+title+author;    
+  var url = "https://www.googleapis.com/books/v1/volumes?q=";
+  var title = document.getElementById('title').value;
+  var author = document.getElementById('author').value;
+  url = url + title + author;
 
-    if (!title || !author) {
-      createModal("Veuiller préciser titre et auteur");
-      return;
-    }
+  if (!title || !author) {
+    createModal("Veuiller préciser titre et auteur");
+    return;
+  }
 
-    fetch(url)
-        .then((res) => res.json())
-        .then((results) => {
-            const container  = document.getElementById('card-container');
-            if (container) {
-                container.parentElement.removeChild(container);
-            }
-            const cardContainer = document.createElement('div');
-            cardContainer.className = 'card-container';
-            cardContainer.id = 'card-container';
-            const search = results.items;
-            search.map((book) => {
-            const card = document.createElement('div');
-            card.className = 'card';
+  const res = fetch(url)
+    .then((res) => res.json())
+    .then((results) => {
+      const container = document.getElementById('card-container');
+      if (container) {
+        container.parentElement.removeChild(container);
+      }
+      const cardContainer = document.createElement('div');
+      cardContainer.className = 'card-container';
+      cardContainer.id = 'card-container';
+      const search = results.items;
+      search.map((book) => {
+        const card = document.createElement('div');
+        card.className = 'card';
 
-            const idBookCard = document.createElement('h4');
-            idBookCard.innerText = "Id : " + book.id;
-            idBookCard.className = 'card-id';
+        const idBookCard = document.createElement('h4');
+        idBookCard.innerText = "Id : " + book.id;
+        idBookCard.className = 'card-id';
 
-            const titleBookCard = document.createElement('h4');
-            titleBookCard.innerText = "Titre : " + book.volumeInfo.title;
-            titleBookCard.className = 'card-title';
+        const titleBookCard = document.createElement('h4');
+        titleBookCard.innerText = "Titre : " + book.volumeInfo.title;
+        titleBookCard.className = 'card-title';
 
-            const authorBookCard = document.createElement('p');
-            authorBookCard.innerText = "Auteur : " + book.volumeInfo.authors;
-            authorBookCard.className = 'card-author';
-            if (book.volumeInfo.authors > 1) {
-                book.volumeInfo.authors = book.volumeInfo.authors.slice(0, 2);
-            }
+        const authorBookCard = document.createElement('p');
+        authorBookCard.innerText = "Auteur : " + book.volumeInfo.authors;
+        authorBookCard.className = 'card-author';
+        if (book.volumeInfo.authors > 1) {
+          book.volumeInfo.authors = book.volumeInfo.authors.slice(0, 2);
+        }
 
-            const descriptionBookCard = document.createElement('p');
-            descriptionBookCard.innerText = "Description : " + book.volumeInfo.description;
-            descriptionBookCard.className = 'card-description';
-            if (descriptionBookCard === '' || descriptionBookCard === 'undefined') {
-            descriptionBookCard.innerText = "Information manquante";
-            } else if (descriptionBookCard.innerText.length > 200) {
-            descriptionBookCard.innerText = descriptionBookCard.innerText.substring(0, 200) + '...';
-            }
+        const descriptionBookCard = document.createElement('p');
+        descriptionBookCard.innerText = "Description : " + book.volumeInfo.description;
+        descriptionBookCard.className = 'card-description';
+        if (descriptionBookCard === '' || descriptionBookCard === 'undefined') {
+          descriptionBookCard.innerText = "Information manquante";
+        } else if (descriptionBookCard.innerText.length > 200) {
+          descriptionBookCard.innerText = descriptionBookCard.innerText.substring(0, 200) + '...';
+        }
 
-            const bookMarks = document.createElement('i');      
-            const headerCard = document.createElement('div');
-            headerCard.className = 'card-header';
-            headerCard.appendChild(titleBookCard);
-            headerCard.appendChild(bookMarks);
+        const bookMarks = document.createElement('i');
+        const headerCard = document.createElement('div');
+        headerCard.className = 'card-header';
+        headerCard.appendChild(titleBookCard);
+        headerCard.appendChild(bookMarks);
 
-            const addBookmarkButton = document.createElement('div');
-            addBookmarkButton.innerHTML = `
+        const addBookmarkButton = document.createElement('div');
+        addBookmarkButton.innerHTML = `
             <i class="addBookmarkButton fa fa-bookmark" id="addBookmarkButton"></i>
             `;
 
-            const imgCard = document.createElement('img');
-            imgCard.className = 'card-img';
+        const imgCard = document.createElement('img');
+        imgCard.className = 'card-img';
 
-            if (book.volumeInfo.imageLinks === null || book.volumeInfo.imageLinks === undefined) {
-            imgCard.src = 'img/unavailable.png';
-            } else {
-            imgCard.src = book.volumeInfo.imageLinks.thumbnail;
-            }
+        if (book.volumeInfo.imageLinks === null || book.volumeInfo.imageLinks === undefined) {
+          imgCard.src = 'img/unavailable.png';
+        } else {
+          imgCard.src = book.volumeInfo.imageLinks.thumbnail;
+        }
 
-            //Bookmark
-            addBookmarkButton.onclick = function() {
-            addBookToPochList(book, true);}
-            card.appendChild(addBookmarkButton);
+        //Bookmark
+        addBookmarkButton.onclick = function () {
+          addBookToPochList(book, true);
+        }
+        card.appendChild(addBookmarkButton);
 
 
-            cardContainer.appendChild(card);
-            card.appendChild(headerCard);
-            card.appendChild(idBookCard);
-            card.appendChild(authorBookCard);
-            card.appendChild(descriptionBookCard);
-            card.appendChild(imgCard);
+        cardContainer.appendChild(card);
+        card.appendChild(headerCard);
+        card.appendChild(idBookCard);
+        card.appendChild(authorBookCard);
+        card.appendChild(descriptionBookCard);
+        card.appendChild(imgCard);
 
-        });
+      });
 
-        //Affichage des résultats    
-        const titlePochList = document.createElement('h2');
-        titlePochList.id = 'titlePochList';
-        titlePochList.className = 'resultRech';
-        titlePochList.innerHTML = "Résultats de la recherche";
-        titlePochList.style.marginTop = "40px";
-        const cardWrapper = document.createElement('div');
-        cardWrapper.appendChild(titlePochList);
-        cardWrapper.appendChild(cardContainer);
-        content.insertBefore(cardWrapper, content.childNodes[0]);
-        });
+      //Affichage des résultats    
+      const titlePochList = document.createElement('h2');
+      titlePochList.id = 'titlePochList';
+      titlePochList.className = 'resultRech';
+      titlePochList.innerHTML = "Résultats de la recherche";
+      titlePochList.style.marginTop = "40px";
+      const cardWrapper = document.createElement('div');
+      cardWrapper.appendChild(titlePochList);
+      cardWrapper.appendChild(cardContainer);
+      content.insertBefore(cardWrapper, content.childNodes[0]);
+    });
 
 }
 
@@ -233,7 +234,7 @@ function addBookToPochList(book, bookToAdd) {
     books.push(book);
     sessionStorage.setItem('myPochList', JSON.stringify(books));
     createModal("Le livre est ajouté dans votre pochlist");
-    
+
   }
 
   const pochList = document.getElementById('livre-container');

@@ -5,13 +5,50 @@ const container = document.getElementById("myBooks");
 
 //fonction bouton "ajouter un livre"
 function addBookButton() {
- 
-  let addButton = document.createElement("div");
+   let addButton = document.createElement("div");
   addButton.innerHTML = `<div class="addBook">
       <button onclick="addSearchForm()" type="button" class="addButton"> Ajouter un livre </button>
     </div>`;
   container.appendChild(addButton);
   newQuery.after(addButton);
+}
+
+function createModal(message) {
+  let addModal = document.createElement("div");
+  addModal.className = "divParentModal";
+  addModal.id = "divParentModal";
+  addModal.innerHTML="";
+  addModal.innerHTML = `<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p class = "modalMessage">${message}</p>
+  </div>
+  
+  </div>`;
+
+  container.appendChild(addModal);
+  newQuery.after(addModal);
+
+  //open the modal
+  var modal = document.getElementById("myModal");
+  modal.style.display = "block";
+
+  var span = document.getElementsByClassName("close")[0];
+  span.onclick = function() {
+    message = "";
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+    }
+  }
+
+var parentModal = document.getElementById("divParentModal");
+// parentModal.classList.add('modal_alert');
+parentModal.style.setProperty('background-color', 'blue');
 }
 
 addBookButton();
@@ -26,7 +63,6 @@ if (!books) {
     addBookToPochList(b, false);
   });
 }
-
 
 
 // Mise en page 
@@ -90,7 +126,7 @@ function cancelSearch() {
     url=url+title+author;    
 
     if (!title || !author) {
-      alert('Veuiller préciser titre et auteur');
+      createModal("Veuiller préciser titre et auteur");
       return;
     }
 
@@ -189,14 +225,15 @@ function addBookToPochList(book, bookToAdd) {
   const found = books.find(e => e.id == book.id);
 
   if (found && bookToAdd) {
-    alert('ce livre existe déjà dans votre pochlist');
+    createModal('ce livre existe déjà dans votre pochlist');
     return;
   }
 
   if (bookToAdd) {
     books.push(book);
     sessionStorage.setItem('myPochList', JSON.stringify(books));
-    alert('Le livre est ajouté dans votre pochlist');
+    createModal("Le livre est ajouté dans votre pochlist");
+    
   }
 
   const pochList = document.getElementById('livre-container');
@@ -242,7 +279,8 @@ function addBookToPochList(book, bookToAdd) {
   removeButton.onclick = function () {
     const cardToDelete = document.getElementById('poch-' + book.id);
     cardToDelete.parentElement.removeChild(cardToDelete);
-    alert("Livre supprimé");
+    createModal("Livre supprimé");
+
 
     let books = JSON.parse(sessionStorage.getItem('myPochList'));
     books = books.filter((b) => b.id != book.id);
